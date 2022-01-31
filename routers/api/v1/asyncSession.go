@@ -2,11 +2,13 @@ package v1
 
 import (
 	"docker-controller/redis"
+	"docker-controller/utils"
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetDockerActionProgress(ctx *gin.Context)  {
@@ -41,8 +43,5 @@ func GetDockerActionProgress(ctx *gin.Context)  {
 		}
 		formatList = append(formatList,_tmp)
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"errCode": 0,
-		"list": formatList,
-	})
+	utils.MakeCommonRespose(ctx, 200, "Get docker action progress", gin.H{"items": formatList})
 }
