@@ -1,0 +1,32 @@
+package routers
+
+import (
+	v1 "docker-controller/routers/api/v1"
+	"github.com/gin-gonic/gin"
+)
+
+func InitRouter() *gin.Engine {
+	r := gin.New()
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	gin.SetMode("debug")
+	apiV1 := r.Group("/api/v1")
+	{
+		apiV1.POST("/trigger", v1.NewTagTrigger)
+		apiV1.GET("/images", v1.GetCurrentImages)
+		apiV1.PUT("/images/:name/:tag", v1.PullNewImage)
+		apiV1.DELETE("/images", v1.RemoveExistedImage)
+		apiV1.GET("/images/tags/:name", v1.FetchImageTags)
+		apiV1.GET("/progress/docker/:session", v1.GetDockerActionProgress)
+		apiV1.GET("/containers", v1.GetCurrentContainers)
+		apiV1.PUT("/containers", v1.StartNewContainer)
+		apiV1.DELETE("/containers", v1.RemoveExistedContainer)
+		apiV1.GET("/containers/status/:id", v1.GetContainersStatus)
+		apiV1.POST("/containers/start/:id", v1.StartExistedContainer)
+		apiV1.POST("/containers/stop/:id", v1.StopContainer)
+		apiV1.POST("/containers/rename/:id", v1.RenameExistedContainer)
+		apiV1.GET("/containers/inspect/:id", v1.InspectExistedContainer)
+		apiV1.GET("/test", v1.GetConfList)
+	}
+	return r
+}
