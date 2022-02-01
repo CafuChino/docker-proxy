@@ -3,13 +3,14 @@ package docker
 import (
 	"context"
 	"docker-controller/utils"
+	"time"
+
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/client"
 	v1 "github.com/opencontainers/image-spec/specs-go/v1"
-	"time"
 )
 
 var cli *client.Client
@@ -110,5 +111,36 @@ func RemoveContainer(id string, force bool) (status bool, err error) {
 	if err != nil {
 		status = false
 	}
+	return
+}
+
+func GetNetworkList() (networks []types.NetworkResource, err error) {
+	networks, err = cli.NetworkList(context.Background(), types.NetworkListOptions{})
+	return
+}
+
+func InspectNetwork(id string) (network types.NetworkResource, err error) {
+	network, err = cli.NetworkInspect(context.Background(), id, types.NetworkInspectOptions{})
+	return
+}
+
+func CreateNetwork(name string, options types.NetworkCreate) (network types.NetworkCreateResponse, err error) {
+	network, err = cli.NetworkCreate(context.Background(), name, options)
+	return
+}
+
+
+func ConnectNetwork(id string,containerId string ,network *network.EndpointSettings) (err error) {
+	err = cli.NetworkConnect(context.Background(), id, containerId, network)
+	return
+}
+
+func DisconnectNetwork(id string,containerId string) (err error) {
+	err = cli.NetworkDisconnect(context.Background(), id, containerId, true)
+	return
+}
+
+func RemoveNetwork(id string) (err error) {
+	err = cli.NetworkRemove(context.Background(), id)
 	return
 }

@@ -2,6 +2,7 @@ package routers
 
 import (
 	v1 "docker-controller/routers/api/v1"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,6 +27,12 @@ func InitRouter() *gin.Engine {
 		apiV1.POST("/containers/stop/:id", v1.StopContainer)
 		apiV1.POST("/containers/rename/:id", v1.RenameExistedContainer)
 		apiV1.GET("/containers/inspect/:id", v1.InspectExistedContainer)
+		apiV1.GET("/networks", v1.GetNetworkList)
+		apiV1.GET("/networks/:id", v1.InspectExistedNetwork)
+		apiV1.PUT("/networks", v1.CreateNewNetwork)
+		apiV1.DELETE("/networks/:id", v1.RemoveExistedNetwork)
+		apiV1.POST("/network/connect", v1.ConnectExistedContainerToNetwork)
+		apiV1.POST("/network/disconnect", v1.DisconnectExistedContainerFromNetwork)
 		apiV1.GET("/test", v1.GetConfList)
 	}
 	return r
