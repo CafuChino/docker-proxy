@@ -122,3 +122,19 @@ func RemoveExistedContainer(ctx *gin.Context)  {
 	}
 	utils.MakeCommonRespose(ctx, 200, "Remove container Success", gin.H{"remove": status})
 }
+
+func KillExistedContainer(ctx *gin.Context)  {
+	id := ctx.Param("id")
+	body, err := utils.ParseJsonReqBody(ctx.Request.Body)
+	if err != nil {
+		utils.MakeCommonRespose(ctx, 500, "Parse request body Error", err.Error())
+		return
+	}
+	signal := body["signal"].(string)
+	_err := docker.KillContainer(id, signal)
+	if _err != nil {
+		utils.MakeCommonRespose(ctx, 500, "Kill container Error", _err.Error())
+		return
+	}
+	utils.MakeCommonRespose(ctx, 200, "Kill container Success", gin.H{"kill": id})
+}

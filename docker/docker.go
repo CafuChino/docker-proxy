@@ -91,6 +91,11 @@ func StopContainer(id string) (status bool, err error) {
 	return
 }
 
+func KillContainer(id string, signal string) (err error) {
+	err = cli.ContainerKill(context.Background(), id, signal)
+	return
+}
+
 func RenameContainer(id string, name string) (status bool, err error)  {
 	err = cli.ContainerRename(context.Background(), id, name)
 	status = true
