@@ -14,6 +14,5 @@ require (
 	github.com/opencontainers/image-spec v1.0.1
 	github.com/spf13/viper v1.10.1
 	github.com/ugorji/go v1.2.6 // indirect
-	go.mongodb.org/mongo-driver v1.8.3
 	gopkg.in/ini.v1 v1.66.3 // indirect
 )

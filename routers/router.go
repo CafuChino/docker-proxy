@@ -13,7 +13,6 @@ func InitRouter() *gin.Engine {
 	gin.SetMode("debug")
 	apiV1 := r.Group("/api/v1")
 	{
-		apiV1.POST("/trigger", v1.NewTagTrigger)
 		apiV1.GET("/images", v1.GetCurrentImages)
 		apiV1.PUT("/images/:name/:tag", v1.PullNewImage)
 		apiV1.DELETE("/images", v1.RemoveExistedImage)
@@ -35,7 +34,6 @@ func InitRouter() *gin.Engine {
 		apiV1.DELETE("/networks/:id", v1.RemoveExistedNetwork)
 		apiV1.POST("/network/connect", v1.ConnectExistedContainerToNetwork)
 		apiV1.POST("/network/disconnect", v1.DisconnectExistedContainerFromNetwork)
-		apiV1.GET("/test", v1.GetConfList)
 	}
 	return r
 }
