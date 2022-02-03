@@ -1,0 +1,18 @@
+{
+  "Server": {
+    "port": 8080,
+    "host": "0.0.0.0",
+    "mode": "release"
+  },
+  "Mongo": {
+    "Host": "localhost",
+    "Port": 27017,
+    "User": "root",
+    "Password": "chino"
+  },
+  "Redis": {
+    "Host": "localhost",
+    "Port": 6379,
+    "Password": ""
+  }
+}

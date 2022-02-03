@@ -1,6 +1,7 @@
 package mongo
 
 import (
+	"docker-controller/conf"
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -13,8 +14,10 @@ var Client mongo.Client
 var Database mongo.Database
 
 func init() {
+	conf.LoadConfig("");
+	config := conf.Conf.Mongo;
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().ApplyURI("mongodb://root:chino@localhost:27017").SetServerAPIOptions(serverAPIOptions)
+	clientOptions := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:%d", config.User, config.Password, config.Host, config.Port)).SetServerAPIOptions(serverAPIOptions)
 	_Client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)

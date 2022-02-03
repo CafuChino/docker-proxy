@@ -91,6 +91,16 @@ func StopContainer(id string) (status bool, err error) {
 	return
 }
 
+func RestartContainer(id string) (status bool, err error) {
+	timeOut, _ := time.ParseDuration("10s")
+	err = cli.ContainerRestart(context.Background(), id, &timeOut)
+	status = true
+	if err != nil {
+		status = false
+	}
+	return
+}
+
 func KillContainer(id string, signal string) (err error) {
 	err = cli.ContainerKill(context.Background(), id, signal)
 	return

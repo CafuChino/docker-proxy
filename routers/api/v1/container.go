@@ -80,6 +80,16 @@ func StopContainer(ctx *gin.Context)  {
 	utils.MakeCommonRespose(ctx, 200, "Stop container Success", gin.H{"shutDown": status})
 }
 
+func RestartExistedContainer(ctx *gin.Context)  {
+	id := ctx.Param("id")
+	status, err := docker.RestartContainer(id)
+	if err != nil {
+		utils.MakeCommonRespose(ctx, 500, "Restart container Error", err.Error())
+		return
+	}
+	utils.MakeCommonRespose(ctx, 200, "Restart container Success", gin.H{"restart": status})
+}
+
 func RenameExistedContainer(ctx *gin.Context) {
 	body,err := utils.ParseJsonReqBody(ctx.Request.Body)
 	if err != nil {

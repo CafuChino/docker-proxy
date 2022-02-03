@@ -27,6 +27,7 @@ func InitRouter() *gin.Engine {
 		apiV1.POST("/containers/stop/:id", v1.StopContainer)
 		apiV1.POST("/containers/kill/:id", v1.KillExistedContainer)
 		apiV1.POST("/containers/rename/:id", v1.RenameExistedContainer)
+		apiV1.POST("/containers/restart/:id", v1.RestartExistedContainer)
 		apiV1.GET("/containers/inspect/:id", v1.InspectExistedContainer)
 		apiV1.GET("/networks", v1.GetNetworkList)
 		apiV1.GET("/networks/:id", v1.InspectExistedNetwork)

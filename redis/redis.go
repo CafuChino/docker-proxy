@@ -1,15 +1,23 @@
 package redis
 
-import "github.com/gomodule/redigo/redis"
+import (
+	"docker-controller/conf"
+	"fmt"
+
+	"github.com/gomodule/redigo/redis"
+)
 
 var RedisCli redis.Conn
 
 func init() {
+	conf.LoadConfig("");
+	config := conf.Conf.Redis;
 	var err error
-	RedisCli, err = redis.Dial("tcp","127.0.0.1:6379")
+	RedisCli, err = redis.Dial("tcp",fmt.Sprintf("%s:%d",config.Host, config.Port))
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Connected to Redis!")
 }
 
 func close()  {
