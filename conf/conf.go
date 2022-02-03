@@ -14,12 +14,6 @@ type serverConfig struct {
 	Mode string
 }
 
-type mongoConfig struct {
-	Host string
-	Port int
-	User string
-	Password string
-}
 
 type redisConfig struct {
 	Host string
@@ -29,7 +23,6 @@ type redisConfig struct {
 
 type Config struct {
 	Server serverConfig
-	Mongo mongoConfig
 	Redis redisConfig
 }
 
@@ -40,12 +33,6 @@ func LoadConfig(path string) {
 		Port: 8080,
 		Address: "127.0.0.1",
 		Mode: "debug",
-	})
-	viper.SetDefault("Mongo", mongoConfig{
-		Host: "127.0.0.1",
-		Port: 27017,
-		User: "",
-		Password: "",
 	})
 	viper.SetDefault("Redis", redisConfig{
 		Host: "127.0.0.1",
